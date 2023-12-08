@@ -23,6 +23,7 @@ dependencies:
     go_router: ^12.1.1
     riverpod: ^2.4.6
     riverpod_annotation: ^2.3.1
+    convex_bottom_bar: ^3.2.0
 
 dev_dependencies:
     flutter_test:

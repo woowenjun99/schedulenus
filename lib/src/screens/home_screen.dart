@@ -1,49 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:schedulenus/src/common_widgets/options_button.dart';
 
 import 'package:schedulenus/src/routes/app_route.dart';
 
-class MyHomePage extends ConsumerStatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
 
   @override
-  ConsumerState<MyHomePage> createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends ConsumerState<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: SizedBox(
-        width: double.infinity,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <OptionsButton>[
-                  OptionsButton(
-                    buttonName: "Timetable",
-                    color: const Color.fromRGBO(255, 197, 197, 0.6),
-                    routeName: AppRoute.allModules.name,
-                    svgPath: "images/calendar-svgrepo-com.svg",
-                  ),
-                  OptionsButton(
-                    buttonName: "Modules",
-                    color: const Color.fromRGBO(255, 227, 187, 0.6),
-                    routeName: AppRoute.allModules.name,
-                    svgPath: "images/book-closed-svgrepo-com.svg",
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-            ],
-          ),
+    return SizedBox(
+      width: double.infinity,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text("Welcome Back",
+                style: GoogleFonts.inter(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 24,
+                )),
+            const SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <OptionsButton>[
+                OptionsButton(
+                  buttonName: "Timetable",
+                  color: const Color.fromRGBO(255, 197, 197, 0.6),
+                  routeName: AppRoute.allModules.name,
+                  svgPath: "images/calendar-svgrepo-com.svg",
+                ),
+                OptionsButton(
+                  buttonName: "Modules",
+                  color: const Color.fromRGBO(255, 227, 187, 0.6),
+                  routeName: AppRoute.allModules.name,
+                  svgPath: "images/book-closed-svgrepo-com.svg",
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+          ],
         ),
       ),
     );
