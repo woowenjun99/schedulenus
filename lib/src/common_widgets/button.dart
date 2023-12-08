@@ -24,21 +24,15 @@ class PrimaryButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           color: Theme.of(context).colorScheme.primary,
         ),
-        child: isLoading
-            ? const SizedBox(
-                height: 10,
-                width: 10,
-                child: CircularProgressIndicator(color: Colors.white),
-              )
-            : Text(
-                buttonText,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
-                  fontSize: 18,
-                  color: Theme.of(context).colorScheme.background,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
+        child: Text(
+          isLoading ? "Loading" : buttonText,
+          textAlign: TextAlign.center,
+          style: GoogleFonts.inter(
+            fontSize: 18,
+            color: Theme.of(context).colorScheme.background,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
       ),
     );
   }
