@@ -20,7 +20,7 @@ class OptionsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => context.goNamed(routeName),
+      onTap: () => context.pushNamed(routeName),
       child: Container(
         width: 160,
         decoration: BoxDecoration(

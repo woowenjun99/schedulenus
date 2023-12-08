@@ -12,29 +12,39 @@ class ModuleListScreen extends ConsumerStatefulWidget {
 }
 
 class _ModuleListScreenState extends ConsumerState<ModuleListScreen> {
+  final TextEditingController _moduleController = TextEditingController();
+
+  @override
+  void dispose() {
+    _moduleController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final AsyncValue<List<SimplifiedModule>> moduleList =
         ref.watch(getAllModulesSummaryProvider);
 
     return Scaffold(
-        body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          moduleList.when(
-            data: (modules) {
-              return ListView.builder(
-                  itemCount: modules.length,
-                  itemBuilder: (context, index) {
-                    return Text(modules[index].title);
-                  });
-            },
-            loading: () => const CircularProgressIndicator(),
-            error: (err, _) => Text(err.toString()),
-          )
-        ],
+      appBar: AppBar(
+        title: const Text("All Modules"),
       ),
-    ));
+      body: Center(
+        child: moduleList.when(
+          data: (modules) => DropdownMenu<SimplifiedModule>(
+            controller: _moduleController,
+            initialSelection: modules[0],
+            dropdownMenuEntries: modules.map((SimplifiedModule module) {
+              return DropdownMenuEntry(
+                value: module,
+                label: module.moduleCode,
+              );
+            }).toList(),
+          ),
+          loading: () => const CircularProgressIndicator(),
+          error: (err, _) => Text(err.toString()),
+        ),
+      ),
+    );
   }
 }
