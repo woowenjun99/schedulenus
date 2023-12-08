@@ -29,7 +29,11 @@ class NusmodsRepository {
 @riverpod
 NusmodsRepository nusmodsRepository(ref) {
   return NusmodsRepository(
-    dio: Dio(BaseOptions(baseUrl: "https://api.nusmods.com/v2")),
+    dio: Dio(BaseOptions(
+      baseUrl: "https://api.nusmods.com/v2",
+      sendTimeout: const Duration(seconds: 5),
+      connectTimeout: const Duration(seconds: 5),
+    )),
   );
 }
 

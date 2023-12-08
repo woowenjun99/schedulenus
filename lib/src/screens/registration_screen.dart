@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_validator/form_validator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:schedulenus/src/common_widgets/button.dart';
+import 'package:schedulenus/src/routes/app_route.dart';
 import 'package:schedulenus/src/services/auth/presentation/registration_screen_controller.dart';
 import 'package:schedulenus/src/util/async_value_ui.dart';
 
@@ -81,12 +83,15 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                   onTap: () async {
                     final bool? isValid = _form.currentState?.validate();
                     if (isValid == null || isValid == false) return;
-                    await ref
+                    final bool isSuccess = await ref
                         .watch(registrationScreenControllerProvider.notifier)
                         .createUserWithEmailAndPassword(
                           email: _emailController.text,
                           password: _passwordController.text,
                         );
+                    if (mounted && isSuccess) {
+                      context.goNamed(AppRoute.home.name);
+                    }
                   },
                   isLoading: state.isLoading,
                 );

@@ -1,10 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:schedulenus/src/common_widgets/options_button.dart';
 
 import 'package:schedulenus/src/routes/app_route.dart';
-import 'package:schedulenus/src/services/auth/data/auth_repository.dart';
 
 class MyHomePage extends ConsumerStatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -16,17 +14,8 @@ class MyHomePage extends ConsumerStatefulWidget {
 }
 
 class _MyHomePageState extends ConsumerState<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    ref.watch(authRepositoryProvider).signout();
-  }
-
   @override
   Widget build(BuildContext context) {
-    final AuthRepository authRepository = ref.watch(authRepositoryProvider);
-    final User user = authRepository.currentUser!;
-
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SizedBox(
@@ -56,11 +45,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }

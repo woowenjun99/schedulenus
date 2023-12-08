@@ -12,7 +12,7 @@ class SimplifiedModule {
   factory SimplifiedModule.fromJson(Map<String, dynamic> json) {
     return SimplifiedModule(
       moduleCode: json["moduleCode"],
-      semesters: json["semesters"],
+      semesters: List<int>.from(json["semesters"]),
       title: json["title"],
     );
   }
