@@ -7,7 +7,7 @@ part of 'auth_screen_controller.dart';
 // **************************************************************************
 
 String _$authScreenControllerHash() =>
-    r'9e3c1c0caf86becf923967a81ef1c21c3fc6e441';
+    r'0f67ba3abe42d99e185a1a355f592655f3fe00d8';
 
 /// See also [AuthScreenController].
 @ProviderFor(AuthScreenController)

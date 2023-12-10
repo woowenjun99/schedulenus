@@ -12,14 +12,16 @@ class AuthRepository {
 
   User? get currentUser => auth.currentUser;
 
-  Future<UserCredential> createUserWithEmailAndPassword({
+  Future<void> createUserWithEmailAndPassword({
     required String email,
     required String password,
-  }) {
-    return auth.createUserWithEmailAndPassword(
+  }) async {
+    await auth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
+
+    return auth.currentUser!.sendEmailVerification();
   }
 
   Future<UserCredential> signInWithEmailAndPassword({

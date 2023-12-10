@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:schedulenus/src/common_widgets/options_button.dart';
 
+import 'package:schedulenus/src/common_widgets/options_button.dart';
 import 'package:schedulenus/src/routes/app_route.dart';
 
 class MyHomePage extends StatefulWidget {

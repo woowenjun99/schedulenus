@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:schedulenus/src/services/auth/data/auth_repository.dart';
 
@@ -14,7 +13,7 @@ class AuthScreenController extends _$AuthScreenController {
   @override
   FutureOr build() {}
 
-  Future<UserCredential> _authenticate({
+  Future<dynamic> _authenticate({
     required String email,
     required String password,
     required AuthScreenFormState formState,
