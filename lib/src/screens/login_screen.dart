@@ -9,14 +9,14 @@ import 'package:schedulenus/src/routes/app_route.dart';
 import 'package:schedulenus/src/services/auth/presentation/auth_screen_controller.dart';
 import 'package:schedulenus/src/util/async_value_ui.dart';
 
-class RegistrationScreen extends ConsumerStatefulWidget {
-  const RegistrationScreen({super.key});
+class LoginScreen extends ConsumerStatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  ConsumerState<RegistrationScreen> createState() => _RegistrationScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -88,7 +88,7 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                         .submit(
                           email: _emailController.text,
                           password: _passwordController.text,
-                          formState: AuthScreenFormState.register,
+                          formState: AuthScreenFormState.login,
                         );
                     if (mounted && isSuccess) {
                       context.goNamed(AppRoute.home.name);

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import 'package:schedulenus/src/common_widgets/scaffold_with_nested_navigation.dart';
 import 'package:schedulenus/src/routes/app_route.dart';
 import 'package:schedulenus/src/routes/go_router_refresh_stream.dart';
+import 'package:schedulenus/src/screens/edit_profile_screen.dart';
 import 'package:schedulenus/src/screens/home_screen.dart';
-import 'package:schedulenus/src/screens/module_list_screen.dart';
+import 'package:schedulenus/src/screens/login_screen.dart';
 import 'package:schedulenus/src/screens/registration_screen.dart';
 import 'package:schedulenus/src/services/auth/data/auth_repository.dart';
 
@@ -18,14 +20,15 @@ final _shellNavigatorBKey = GlobalKey<NavigatorState>(debugLabel: 'shellB');
 @riverpod
 GoRouter goRouter(ref) {
   final AuthRepository authRepository = ref.watch(authRepositoryProvider);
-  final bool isLoggedIn = authRepository.currentUser != null;
 
   return GoRouter(
-    initialLocation: isLoggedIn ? "/home" : "/auth",
+    initialLocation: "/home",
     navigatorKey: _rootNavigatorKey,
     redirect: (context, state) {
       final bool isLoggedIn = authRepository.currentUser != null;
-      if (!isLoggedIn) {
+      if (!isLoggedIn &&
+          (state.name != AppRoute.registration.name ||
+              state.name != AppRoute.login.name)) {
         return "/auth";
       }
       return null;
@@ -33,9 +36,14 @@ GoRouter goRouter(ref) {
     refreshListenable: GoRouterRefreshStream(authRepository.authStateChange),
     routes: [
       GoRoute(
-        path: "/auth",
-        name: AppRoute.auth.name,
+        path: "/registration",
+        name: AppRoute.registration.name,
         builder: (context, state) => const RegistrationScreen(),
+      ),
+      GoRoute(
+        path: "/login",
+        name: AppRoute.login.name,
+        builder: (context, state) => const LoginScreen(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
@@ -55,9 +63,9 @@ GoRouter goRouter(ref) {
             navigatorKey: _shellNavigatorBKey,
             routes: [
               GoRoute(
-                path: "/allModules",
-                name: AppRoute.allModules.name,
-                builder: (context, state) => const ModuleListScreen(),
+                path: "/profile",
+                name: AppRoute.profile.name,
+                builder: (context, state) => const ProfileScreen(),
               ),
             ],
           ),

@@ -22,6 +22,13 @@ class AuthRepository {
     );
   }
 
+  Future<UserCredential> signInWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) {
+    return auth.signInWithEmailAndPassword(email: email, password: password);
+  }
+
   Future<void> signout() => auth.signOut();
 }
 

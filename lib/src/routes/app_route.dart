@@ -1,5 +1,7 @@
 enum AppRoute {
   allModules,
-  auth,
   home,
+  login,
+  profile,
+  registration,
 }
