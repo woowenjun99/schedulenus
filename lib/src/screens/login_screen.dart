@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import 'package:schedulenus/src/common_widgets/button.dart';
 import 'package:schedulenus/src/routes/app_route.dart';
@@ -97,6 +98,31 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   isLoading: state.isLoading,
                 );
               }),
+              const SizedBox(height: 60),
+              SizedBox(
+                width: contentWidth,
+                child: const Divider(),
+              ),
+              const SizedBox(height: 24),
+              SizedBox(
+                width: contentWidth,
+                child: ElevatedButton.icon(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                      Theme.of(context).colorScheme.background,
+                    ),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                  onPressed: () =>
+                      context.pushNamed(AppRoute.registration.name),
+                  icon: Icon(MdiIcons.accountPlus),
+                  label: const Text("Create an account"),
+                ),
+              ),
             ],
           ),
         ),

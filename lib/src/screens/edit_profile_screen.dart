@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:schedulenus/src/common_widgets/button.dart';
+import 'package:schedulenus/src/services/auth/data/auth_repository.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -22,6 +23,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final AuthRepository authRepository = ref.watch(authRepositoryProvider);
+  
     return SizedBox(
       width: double.infinity,
       child: Column(
@@ -44,9 +47,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             ),
           ),
           const SizedBox(height: 24),
-          const PrimaryButton(
+          PrimaryButton(
             buttonText: "Edit Information",
-            onTap: null,
+            onTap: authRepository.signout,
             isLoading: false,
           )
         ],

@@ -27,9 +27,8 @@ GoRouter goRouter(ref) {
     redirect: (context, state) {
       final bool isLoggedIn = authRepository.currentUser != null;
       if (!isLoggedIn &&
-          (state.name != AppRoute.registration.name ||
-              state.name != AppRoute.login.name)) {
-        return "/auth";
+          (state.fullPath != "/registration" && state.fullPath != "/login")) {
+        return "/login";
       }
       return null;
     },

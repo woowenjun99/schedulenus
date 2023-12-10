@@ -12,16 +12,20 @@ class UserRepository {
 
   /// Modifies the user record in the database with the [email], [fullName] and
   /// [semester].
-  Future<HttpsCallableResult> editUser({
+  Future<HttpsCallableResult> createUser({
     required String email,
     required String fullName,
+    required String uid,
     required int semester,
-  }) {
-    return functions.httpsCallable("createUser").call({
+  }) async {
+    final result = await functions.httpsCallable("createUser").call({
       "email": email,
       "fullName": fullName,
-      "semester": semester,
+      "id": uid,
+      "semester": semester.toString(),
     });
+
+    return result;
   }
 
   /// Gets the user object from the database. The result is an object containing
@@ -41,13 +45,9 @@ class UserRepository {
   }
 }
 
-@Riverpod(keepAlive: false)
+@riverpod
 UserRepository userRepository(ref) {
-  return UserRepository(functions: FirebaseFunctions.instance);
-}
-
-@Riverpod(keepAlive: false)
-Future<HttpsCallableResult> getUserInformation(ref, {required String uid}) {
-  final UserRepository userRepository = ref.watch(userRepositoryProvider);
-  return userRepository.getUserInformation(uid: uid);
+  return UserRepository(
+    functions: FirebaseFunctions.instanceFor(region: "asia-southeast1"),
+  );
 }

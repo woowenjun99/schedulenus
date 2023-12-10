@@ -37,6 +37,7 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
     );
 
     return Scaffold(
+      appBar: AppBar(),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Form(
         key: _form,
@@ -79,7 +80,7 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                     ref.watch(authScreenControllerProvider);
 
                 return PrimaryButton(
-                  buttonText: "Sign In",
+                  buttonText: "Register",
                   onTap: () async {
                     final bool? isValid = _form.currentState?.validate();
                     if (isValid == null || isValid == false) return;

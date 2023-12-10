@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:schedulenus/src/services/auth/data/auth_repository.dart';
+import 'package:schedulenus/src/services/user/data/user_repository.dart';
 
 part 'auth_screen_controller.g.dart';
 
@@ -27,10 +29,22 @@ class AuthScreenController extends _$AuthScreenController {
           password: password,
         );
       default:
-        return authRepository.createUserWithEmailAndPassword(
+        final UserCredential credential =
+            await authRepository.createUserWithEmailAndPassword(
           email: email,
           password: password,
         );
+
+        final UserRepository userRepository = ref.watch(userRepositoryProvider);
+
+        await userRepository.createUser(
+          email: email,
+          fullName: "",
+          uid: credential.user!.uid,
+          semester: 0,
+        );
+
+        return credential;
     }
   }
 
