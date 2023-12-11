@@ -1,53 +1,40 @@
+import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:cloud_functions/cloud_functions.dart';
+import 'package:schedulenus/src/services/user/domain/user.dart';
+import 'package:schedulenus/src/util/my_dio.dart';
 
 part 'user_repository.g.dart';
 
 class UserRepository {
-  final FirebaseFunctions functions;
+  Dio dio;
 
-  const UserRepository({
-    required this.functions,
-  });
+  UserRepository({required this.dio});
 
-  /// Modifies the user record in the database with the [email], [fullName] and
-  /// [semester].
-  Future<HttpsCallableResult> createUser({
-    required String email,
-    required String fullName,
-    required String uid,
-    required int semester,
-  }) async {
-    final result = await functions.httpsCallable("createUser").call({
-      "email": email,
-      "fullName": fullName,
-      "id": uid,
-      "semester": semester.toString(),
-    });
+  Future<User?> getUser({required String userId}) async {
+    final response = await dio.request(
+      "/get_user",
+      options: Options(method: "GET"),
+      queryParameters: {
+        "userId": userId,
+      },
+    );
 
-    return result;
-  }
+    final Map<String, dynamic> json = Map<String, dynamic>.from(response.data);
 
-  /// Gets the user object from the database. The result is an object containing
-  /// the following:
-  ///
-  /// hasCompletedVerification: boolean
-  /// email: String
-  /// fullName: String
-  /// semester: int
-  /// uid: String
-  Future<HttpsCallableResult> getUserInformation({
-    required String uid,
-  }) {
-    return functions.httpsCallable("getUser").call({
-      "uid": uid,
-    });
+    if (json["result"] == null) return null;
+
+    return User.fromJson(json);
   }
 }
 
 @riverpod
 UserRepository userRepository(ref) {
-  return UserRepository(
-    functions: FirebaseFunctions.instanceFor(region: "asia-southeast1"),
-  );
+  final Dio dio = ref.watch(dioProvider);
+  return UserRepository(dio: dio);
+}
+
+@Riverpod(keepAlive: false)
+Future<User?> getUser(ref, {required String userId}) {
+  final UserRepository userRepository = ref.watch(userRepositoryProvider);
+  return userRepository.getUser(userId: userId);
 }

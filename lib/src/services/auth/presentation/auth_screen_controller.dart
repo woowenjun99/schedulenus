@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:schedulenus/src/services/auth/data/auth_repository.dart';
-import 'package:schedulenus/src/services/user/data/user_repository.dart';
 
 part 'auth_screen_controller.g.dart';
 
@@ -35,15 +34,6 @@ class AuthScreenController extends _$AuthScreenController {
           password: password,
         );
 
-        final UserRepository userRepository = ref.watch(userRepositoryProvider);
-
-        await userRepository.createUser(
-          email: email,
-          fullName: "",
-          uid: credential.user!.uid,
-          semester: 0,
-        );
-
         return credential;
     }
   }
@@ -61,6 +51,12 @@ class AuthScreenController extends _$AuthScreenController {
         formState: formState,
       ),
     );
+    return state.hasError == false;
+  }
+  Future<bool> signout() async {
+    state = const AsyncLoading();
+    final AuthRepository authRepository = ref.watch(authRepositoryProvider);
+    state = await AsyncValue.guard(authRepository.signout);
     return state.hasError == false;
   }
 }

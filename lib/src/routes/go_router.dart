@@ -5,7 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:schedulenus/src/common_widgets/scaffold_with_nested_navigation.dart';
 import 'package:schedulenus/src/routes/app_route.dart';
 import 'package:schedulenus/src/routes/go_router_refresh_stream.dart';
-import 'package:schedulenus/src/screens/edit_profile_screen.dart';
+import 'package:schedulenus/src/screens/profile_screen.dart';
 import 'package:schedulenus/src/screens/home_screen.dart';
 import 'package:schedulenus/src/screens/login_screen.dart';
 import 'package:schedulenus/src/screens/registration_screen.dart';
@@ -31,6 +31,8 @@ GoRouter goRouter(ref) {
         return "/login";
       }
 
+      // Login logic: If the user is logged in but still at the login and
+      // registration page, push him to home.
       if (isLoggedIn &&
           (state.fullPath == "/login" || state.fullPath == "/registration")) {
         return "/home";

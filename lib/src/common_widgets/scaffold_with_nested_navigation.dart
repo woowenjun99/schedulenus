@@ -20,12 +20,12 @@ class ScaffoldWithNestedNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: navigationShell,
+      body: SafeArea(child: navigationShell),
       bottomNavigationBar: ConvexAppBar(
         onTap: _goBranch,
         items: const [
           TabItem(icon: Icon(Icons.home), title: "Home"),
-          TabItem(icon: Icon(Icons.calendar_month), title: "Timetable"),
+          TabItem(icon: Icon(Icons.account_circle), title: "Profile"),
         ],
       ),
     );
