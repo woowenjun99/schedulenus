@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
+import 'package:schedulenus/src/common_widgets/button.dart';
 import 'package:schedulenus/src/routes/app_route.dart';
 import 'package:schedulenus/src/services/auth/presentation/auth_screen_controller.dart';
 import 'package:schedulenus/src/util/async_value_ui.dart';
@@ -84,44 +85,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                     return SizedBox(
                       width: contentWidth,
-                      child: FilledButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                            Theme.of(context).colorScheme.primary,
-                          ),
-                          shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                        ),
+                      child: PrimaryButton(
+                        isLoading: state.isLoading,
+                        buttonText: "Sign In",
                         onPressed: () async {
                           final bool isValid = _form.currentState!.validate();
                           if (!isValid) return;
-                          final bool isSuccess = await ref
+                          _form.currentState!.save();
+                          await ref
                               .watch(authScreenControllerProvider.notifier)
                               .submit(
                                 email: _emailController.text,
                                 password: _passwordController.text,
                                 formState: AuthScreenFormState.login,
                               );
-                          if (mounted && isSuccess) {
-                            context.pushNamed(AppRoute.home.name);
-                          }
                         },
-                        child: state.isLoading
-                            ? const CircularProgressIndicator(
-                                color: Colors.white,
-                              )
-                            : Text(
-                                "Sign In",
-                                style: GoogleFonts.inter(
-                                  fontSize: 18,
-                                  color:
-                                      Theme.of(context).colorScheme.background,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
                       ),
                     );
                   }),

@@ -24,7 +24,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final AuthRepository authRepository = ref.watch(authRepositoryProvider);
-  
+
     return SizedBox(
       width: double.infinity,
       child: Column(
@@ -49,7 +49,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           const SizedBox(height: 24),
           PrimaryButton(
             buttonText: "Edit Information",
-            onTap: authRepository.signout,
+            onPressed: authRepository.signout,
             isLoading: false,
           )
         ],

@@ -30,6 +30,11 @@ GoRouter goRouter(ref) {
           (state.fullPath != "/registration" && state.fullPath != "/login")) {
         return "/login";
       }
+
+      if (isLoggedIn &&
+          (state.fullPath == "/login" || state.fullPath == "/registration")) {
+        return "/home";
+      }
       return null;
     },
     refreshListenable: GoRouterRefreshStream(authRepository.authStateChange),

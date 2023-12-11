@@ -19,7 +19,7 @@ class OptionsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () => context.pushNamed(routeName),
       child: Container(
         width: 160,

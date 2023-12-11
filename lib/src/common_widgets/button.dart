@@ -2,38 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PrimaryButton extends StatelessWidget {
-  final String buttonText;
-  final void Function()? onTap;
+  final void Function() onPressed;
   final bool isLoading;
+  final String buttonText;
 
   const PrimaryButton({
     super.key,
-    required this.buttonText,
-    required this.onTap,
+    required this.onPressed,
     required this.isLoading,
+    required this.buttonText,
   });
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.9,
-        padding: const EdgeInsetsDirectional.only(top: 8, bottom: 8),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: Theme.of(context).colorScheme.primary,
+    return FilledButton(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(
+          Theme.of(context).colorScheme.primary,
         ),
-        child: Text(
-          isLoading ? "Loading" : buttonText,
-          textAlign: TextAlign.center,
-          style: GoogleFonts.inter(
-            fontSize: 18,
-            color: Theme.of(context).colorScheme.background,
-            fontWeight: FontWeight.w500,
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
           ),
         ),
       ),
+      onPressed: onPressed,
+      child: isLoading
+          ? const CircularProgressIndicator(
+              color: Colors.white,
+            )
+          : Text(
+              buttonText,
+              style: GoogleFonts.inter(
+                fontSize: 18,
+                color: Theme.of(context).colorScheme.background,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
     );
   }
 }

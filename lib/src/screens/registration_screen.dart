@@ -81,7 +81,7 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
 
                 return PrimaryButton(
                   buttonText: "Register",
-                  onTap: () async {
+                  onPressed: () async {
                     final bool? isValid = _form.currentState?.validate();
                     if (isValid == null || isValid == false) return;
                     final bool isSuccess = await ref
