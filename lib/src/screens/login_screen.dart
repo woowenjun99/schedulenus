@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import 'package:schedulenus/src/common_widgets/button.dart';
 import 'package:schedulenus/src/routes/app_route.dart';
 import 'package:schedulenus/src/services/auth/presentation/auth_screen_controller.dart';
 import 'package:schedulenus/src/util/async_value_ui.dart';
@@ -43,88 +42,119 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         key: _form,
         child: SizedBox(
           width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "ScheduleNUS",
-                style: GoogleFonts.inter(
-                  fontSize: 36,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(height: 24),
-              SizedBox(
-                width: contentWidth,
-                child: TextFormField(
-                  controller: _emailController,
-                  decoration: const InputDecoration(label: Text("Email")),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: ValidationBuilder().email().required().build(),
-                ),
-              ),
-              const SizedBox(height: 16),
-              SizedBox(
-                width: contentWidth,
-                child: TextFormField(
-                  controller: _passwordController,
-                  decoration: const InputDecoration(label: Text("Password")),
-                  keyboardType: TextInputType.text,
-                  obscureText: true,
-                  validator: ValidationBuilder().required().build(),
-                ),
-              ),
-              const SizedBox(height: 28),
-              Consumer(builder: (BuildContext context, WidgetRef ref, _) {
-                final AsyncValue<void> state =
-                    ref.watch(authScreenControllerProvider);
-
-                return PrimaryButton(
-                  buttonText: "Sign In",
-                  onTap: () async {
-                    final bool? isValid = _form.currentState?.validate();
-                    if (isValid == null || isValid == false) return;
-                    final bool isSuccess = await ref
-                        .watch(authScreenControllerProvider.notifier)
-                        .submit(
-                          email: _emailController.text,
-                          password: _passwordController.text,
-                          formState: AuthScreenFormState.login,
-                        );
-                    if (mounted && isSuccess) {
-                      context.goNamed(AppRoute.home.name);
-                    }
-                  },
-                  isLoading: state.isLoading,
-                );
-              }),
-              const SizedBox(height: 60),
-              SizedBox(
-                width: contentWidth,
-                child: const Divider(),
-              ),
-              const SizedBox(height: 24),
-              SizedBox(
-                width: contentWidth,
-                child: ElevatedButton.icon(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                      Theme.of(context).colorScheme.background,
-                    ),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
+          child: CustomScrollView(slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "ScheduleNUS",
+                    style: GoogleFonts.inter(
+                      fontSize: 36,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                  onPressed: () =>
-                      context.pushNamed(AppRoute.registration.name),
-                  icon: Icon(MdiIcons.accountPlus),
-                  label: const Text("Create an account"),
-                ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    width: contentWidth,
+                    child: TextFormField(
+                      controller: _emailController,
+                      decoration: const InputDecoration(label: Text("Email")),
+                      keyboardType: TextInputType.emailAddress,
+                      validator: ValidationBuilder().email().required().build(),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    width: contentWidth,
+                    child: TextFormField(
+                      controller: _passwordController,
+                      decoration:
+                          const InputDecoration(label: Text("Password")),
+                      keyboardType: TextInputType.text,
+                      obscureText: true,
+                      validator: ValidationBuilder().required().build(),
+                    ),
+                  ),
+                  const SizedBox(height: 28),
+                  Consumer(builder: (BuildContext context, WidgetRef ref, _) {
+                    final AsyncValue<void> state =
+                        ref.watch(authScreenControllerProvider);
+
+                    return SizedBox(
+                      width: contentWidth,
+                      child: FilledButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                            Theme.of(context).colorScheme.primary,
+                          ),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ),
+                        onPressed: () async {
+                          final bool isValid = _form.currentState!.validate();
+                          if (!isValid) return;
+                          final bool isSuccess = await ref
+                              .watch(authScreenControllerProvider.notifier)
+                              .submit(
+                                email: _emailController.text,
+                                password: _passwordController.text,
+                                formState: AuthScreenFormState.login,
+                              );
+                          if (mounted && isSuccess) {
+                            context.pushNamed(AppRoute.home.name);
+                          }
+                        },
+                        child: state.isLoading
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : Text(
+                                "Sign In",
+                                style: GoogleFonts.inter(
+                                  fontSize: 18,
+                                  color:
+                                      Theme.of(context).colorScheme.background,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                      ),
+                    );
+                  }),
+                  const SizedBox(height: 60),
+                  SizedBox(
+                    width: contentWidth,
+                    child: const Divider(),
+                  ),
+                  const SizedBox(height: 24),
+                  SizedBox(
+                    width: contentWidth,
+                    child: ElevatedButton.icon(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          Theme.of(context).colorScheme.background,
+                        ),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                      onPressed: () =>
+                          context.pushNamed(AppRoute.registration.name),
+                      icon: Icon(MdiIcons.accountPlus),
+                      label: const Text("Create an account"),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ]),
         ),
       ),
     );
