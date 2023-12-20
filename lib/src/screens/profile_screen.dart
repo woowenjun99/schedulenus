@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:schedulenus/src/common_widgets/button.dart';
 
 import 'package:schedulenus/src/services/auth/presentation/auth_screen_controller.dart';
 import 'package:schedulenus/src/util/async_value_ui.dart';
@@ -19,16 +20,24 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.9,
-                  child: OutlinedButton.icon(
-                    style: ButtonStyle(
-                        shape: MaterialStateProperty.all(
-                      const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.zero),
-                      ),
-                    )),
-                    onPressed: null,
-                    icon: const Icon(Icons.settings),
-                    label: const Text("Edit Profile"),
+                  child: ListTile(
+                    leading: const Icon(Icons.account_circle),
+                    trailing: const Icon(Icons.chevron_right_outlined),
+                    title: const Text("My Account"),
+                    onTap: null,
+                    textColor: Theme.of(context).colorScheme.primary,
+                    iconColor: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: ListTile(
+                    leading: const Icon(Icons.calendar_month),
+                    trailing: const Icon(Icons.chevron_right_outlined),
+                    title: const Text("My Modules"),
+                    onTap: null,
+                    textColor: Theme.of(context).colorScheme.primary,
+                    iconColor: Theme.of(context).colorScheme.primary,
                   ),
                 ),
                 Consumer(builder: (context, ref, _) {
@@ -38,31 +47,14 @@ class ProfileScreen extends StatelessWidget {
                     state.showAlertDialogOnError(context);
                   });
 
-                  final AsyncValue state =
-                      ref.watch(authScreenControllerProvider);
-
                   return SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
-                    child: OutlinedButton.icon(
-                      style: ButtonStyle(
-                        side: MaterialStateProperty.all(
-                          const BorderSide(color: Colors.red),
-                        ),
-                        iconColor: MaterialStateProperty.all(Colors.red),
-                      ),
+                    child: PrimaryButton(
                       onPressed: ref
                           .watch(authScreenControllerProvider.notifier)
                           .signout,
-                      icon: const Icon(Icons.logout),
-                      label: state.isLoading
-                          ? const CircularProgressIndicator()
-                          : const Text(
-                              "Sign Out",
-                              style: TextStyle(
-                                color: Colors.red,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
+                      isLoading: false,
+                      buttonText: "Logout",
                     ),
                   );
                 }),

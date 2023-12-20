@@ -192,11 +192,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       duration: const Duration(milliseconds: 1800),
                       child: SizedBox(
                         width: contentWidth,
-                        child: ElevatedButton.icon(
+                        child: OutlinedButton.icon(
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                              Theme.of(context).colorScheme.background,
-                            ),
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(
                               RoundedRectangleBorder(

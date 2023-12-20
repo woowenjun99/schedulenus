@@ -62,7 +62,7 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        "Create a new account and start using the NUS schedule now.",
+                        "Create a new account and start using ScheduleNUS now.",
                         style: GoogleFonts.inter(),
                         overflow: TextOverflow.clip,
                       ),
