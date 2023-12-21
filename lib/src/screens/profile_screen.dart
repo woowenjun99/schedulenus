@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:schedulenus/src/common_widgets/button.dart';
+import 'package:schedulenus/src/routes/app_route.dart';
 
 import 'package:schedulenus/src/services/auth/presentation/auth_screen_controller.dart';
 import 'package:schedulenus/src/util/async_value_ui.dart';
@@ -24,7 +26,8 @@ class ProfileScreen extends StatelessWidget {
                     leading: const Icon(Icons.account_circle),
                     trailing: const Icon(Icons.chevron_right_outlined),
                     title: const Text("My Account"),
-                    onTap: null,
+                    onTap: () =>
+                        context.pushNamed(AppRoute.myAccountScreen.name),
                     textColor: Theme.of(context).colorScheme.primary,
                     iconColor: Theme.of(context).colorScheme.primary,
                   ),

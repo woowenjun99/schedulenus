@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import 'package:schedulenus/src/services/user/domain/user.dart';
 import 'package:schedulenus/src/util/my_dio.dart';
 
@@ -12,7 +13,7 @@ class UserRepository {
 
   Future<User?> getUser({required String userId}) async {
     final response = await dio.request(
-      "/get_user",
+      "/user",
       options: Options(method: "GET"),
       queryParameters: {
         "userId": userId,
@@ -24,6 +25,14 @@ class UserRepository {
     if (json["result"] == null) return null;
 
     return User.fromJson(json);
+  }
+
+  Future editUser() async {
+    final response = await dio.request(
+      "/user",
+      options: Options(method: "PATCH"),
+      data: {},
+    );
   }
 }
 

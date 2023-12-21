@@ -5,6 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:schedulenus/src/common_widgets/scaffold_with_nested_navigation.dart';
 import 'package:schedulenus/src/routes/app_route.dart';
 import 'package:schedulenus/src/routes/go_router_refresh_stream.dart';
+import 'package:schedulenus/src/screens/my_account_screen.dart';
 import 'package:schedulenus/src/screens/profile_screen.dart';
 import 'package:schedulenus/src/screens/home_screen.dart';
 import 'package:schedulenus/src/screens/login_screen.dart';
@@ -72,6 +73,13 @@ GoRouter goRouter(ref) {
                 path: "/profile",
                 name: AppRoute.profile.name,
                 builder: (context, state) => const ProfileScreen(),
+                routes: [
+                  GoRoute(
+                    path: "my_account",
+                    name: AppRoute.myAccountScreen.name,
+                    builder: (context, state) => const MyAccountScreen(),
+                  ),
+                ],
               ),
             ],
           ),
