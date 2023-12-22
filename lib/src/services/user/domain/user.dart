@@ -21,11 +21,11 @@ class User {
     return User(
       id: json["id"],
       email: json["email"],
-      fullName: json["full_name"],
-      hasCompletedSetup: json["has_completed_setup"],
+      fullName: json["fullName"],
+      hasCompletedSetup: json["hasCompletedSetup"],
       major: json["major"],
       semester: json["semester"],
-      username: json["username"] ?? "",
+      username: json["username"],
     );
   }
 }

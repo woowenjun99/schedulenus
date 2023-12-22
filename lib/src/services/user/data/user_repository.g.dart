@@ -6,7 +6,7 @@ part of 'user_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userRepositoryHash() => r'0171328046d493359749d073d478cea6a785b391';
+String _$userRepositoryHash() => r'ad6cb18b6fd68d9b2b8f331242aabfcc1e50ce5b';
 
 /// See also [userRepository].
 @ProviderFor(userRepository)
@@ -21,7 +21,7 @@ final userRepositoryProvider = AutoDisposeProvider<UserRepository>.internal(
 );
 
 typedef UserRepositoryRef = AutoDisposeProviderRef<UserRepository>;
-String _$getUserHash() => r'234b986d1fe349641fc80505baeb4035a2eeb4dc';
+String _$getUserHash() => r'1cded92895ffccf57820c7102de2934c43c42685';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -49,16 +49,16 @@ class _SystemHash {
 const getUserProvider = GetUserFamily();
 
 /// See also [getUser].
-class GetUserFamily extends Family<AsyncValue<User?>> {
+class GetUserFamily extends Family<AsyncValue<User>> {
   /// See also [getUser].
   const GetUserFamily();
 
   /// See also [getUser].
   GetUserProvider call({
-    required String userId,
+    required String id,
   }) {
     return GetUserProvider(
-      userId: userId,
+      id: id,
     );
   }
 
@@ -67,7 +67,7 @@ class GetUserFamily extends Family<AsyncValue<User?>> {
     covariant GetUserProvider provider,
   ) {
     return call(
-      userId: provider.userId,
+      id: provider.id,
     );
   }
 
@@ -87,14 +87,14 @@ class GetUserFamily extends Family<AsyncValue<User?>> {
 }
 
 /// See also [getUser].
-class GetUserProvider extends AutoDisposeFutureProvider<User?> {
+class GetUserProvider extends AutoDisposeFutureProvider<User> {
   /// See also [getUser].
   GetUserProvider({
-    required String userId,
+    required String id,
   }) : this._internal(
           (ref) => getUser(
             ref as GetUserRef,
-            userId: userId,
+            id: id,
           ),
           from: getUserProvider,
           name: r'getUserProvider',
@@ -104,7 +104,7 @@ class GetUserProvider extends AutoDisposeFutureProvider<User?> {
                   : _$getUserHash,
           dependencies: GetUserFamily._dependencies,
           allTransitiveDependencies: GetUserFamily._allTransitiveDependencies,
-          userId: userId,
+          id: id,
         );
 
   GetUserProvider._internal(
@@ -114,14 +114,14 @@ class GetUserProvider extends AutoDisposeFutureProvider<User?> {
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.userId,
+    required this.id,
   }) : super.internal();
 
-  final String userId;
+  final String id;
 
   @override
   Override overrideWith(
-    FutureOr<User?> Function(GetUserRef provider) create,
+    FutureOr<User> Function(GetUserRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -132,41 +132,41 @@ class GetUserProvider extends AutoDisposeFutureProvider<User?> {
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        userId: userId,
+        id: id,
       ),
     );
   }
 
   @override
-  AutoDisposeFutureProviderElement<User?> createElement() {
+  AutoDisposeFutureProviderElement<User> createElement() {
     return _GetUserProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is GetUserProvider && other.userId == userId;
+    return other is GetUserProvider && other.id == id;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, userId.hashCode);
+    hash = _SystemHash.combine(hash, id.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
-mixin GetUserRef on AutoDisposeFutureProviderRef<User?> {
-  /// The parameter `userId` of this provider.
-  String get userId;
+mixin GetUserRef on AutoDisposeFutureProviderRef<User> {
+  /// The parameter `id` of this provider.
+  String get id;
 }
 
-class _GetUserProviderElement extends AutoDisposeFutureProviderElement<User?>
+class _GetUserProviderElement extends AutoDisposeFutureProviderElement<User>
     with GetUserRef {
   _GetUserProviderElement(super.provider);
 
   @override
-  String get userId => (origin as GetUserProvider).userId;
+  String get id => (origin as GetUserProvider).id;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -70,17 +70,16 @@ GoRouter goRouter(ref) {
             navigatorKey: _shellNavigatorBKey,
             routes: [
               GoRoute(
-                path: "/profile",
-                name: AppRoute.profile.name,
-                builder: (context, state) => const ProfileScreen(),
-                routes: [
-                  GoRoute(
-                    path: "my_account",
-                    name: AppRoute.myAccountScreen.name,
-                    builder: (context, state) => const MyAccountScreen(),
-                  ),
-                ],
-              ),
+                  path: "/profile",
+                  name: AppRoute.profile.name,
+                  builder: (context, state) => const ProfileScreen(),
+                  routes: [
+                    GoRoute(
+                      path: "my_account",
+                      name: AppRoute.myAccountScreen.name,
+                      builder: (context, state) => const MyAccountScreen(),
+                    ),
+                  ]),
             ],
           ),
         ],

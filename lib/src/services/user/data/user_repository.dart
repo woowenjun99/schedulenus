@@ -1,49 +1,53 @@
-import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:schedulenus/src/services/user/domain/user.dart';
-import 'package:schedulenus/src/util/my_dio.dart';
 
 part 'user_repository.g.dart';
 
 class UserRepository {
-  Dio dio;
+  FirebaseFunctions functions;
 
-  UserRepository({required this.dio});
+  UserRepository({required this.functions});
 
-  Future<User?> getUser({required String userId}) async {
-    final response = await dio.request(
-      "/user",
-      options: Options(method: "GET"),
-      queryParameters: {
-        "userId": userId,
-      },
-    );
+  Future<User> getUser({required String id}) async {
+    final HttpsCallableResult result =
+        await functions.httpsCallable("getUser").call({"id": id});
 
-    final Map<String, dynamic> json = Map<String, dynamic>.from(response.data);
-
-    if (json["result"] == null) return null;
-
-    return User.fromJson(json);
+    return User.fromJson(result.data);
   }
 
-  Future editUser() async {
-    final response = await dio.request(
-      "/user",
-      options: Options(method: "PATCH"),
-      data: {},
-    );
+  Future<void> updateUser({
+    required String fullName,
+    required String id,
+    required String major,
+    required int semester,
+    required String username,
+  }) async {
+    final HttpsCallableResult result =
+        await functions.httpsCallable("updateUser").call({
+      "fullName": fullName,
+      "id": id,
+      "major": major,
+      "semester": semester,
+      "username": username,
+    });
+
+    final data = Map<String, dynamic>.from(result.data);
+
+    if (!data["success"]) throw Exception(data["error"]);
   }
 }
 
 @riverpod
 UserRepository userRepository(ref) {
-  final Dio dio = ref.watch(dioProvider);
-  return UserRepository(dio: dio);
+  return UserRepository(
+    functions: FirebaseFunctions.instanceFor(region: "asia-southeast1"),
+  );
 }
 
 @Riverpod(keepAlive: false)
-Future<User?> getUser(ref, {required String userId}) {
+Future<User> getUser(ref, {required String id}) {
   final UserRepository userRepository = ref.watch(userRepositoryProvider);
-  return userRepository.getUser(userId: userId);
+  return userRepository.getUser(id: id);
 }
