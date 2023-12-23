@@ -28,15 +28,21 @@ class PrimaryButton extends StatelessWidget {
       ),
       onPressed: onPressed,
       child: isLoading
-          ? const CircularProgressIndicator(
-              color: Colors.white,
+          ? const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
             )
-          : Text(
-              buttonText,
-              style: GoogleFonts.inter(
-                fontSize: 18,
-                color: Theme.of(context).colorScheme.background,
-                fontWeight: FontWeight.w500,
+          : Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                buttonText,
+                style: GoogleFonts.inter(
+                  fontSize: 18,
+                  color: Theme.of(context).colorScheme.background,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
     );

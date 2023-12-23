@@ -11,10 +11,11 @@ class MyAccountScreenFormController extends _$MyAccountScreenFormController {
   FutureOr<void> build() {}
 
   Future<bool> submitUser({
+    required String email,
     required String fullName,
     required String major,
     required int semester,
-    required String username,
+    String username = "",
   }) async {
     final UserRepository userRepository = ref.watch(userRepositoryProvider);
     final AuthRepository authRepository = ref.watch(authRepositoryProvider);
@@ -23,6 +24,7 @@ class MyAccountScreenFormController extends _$MyAccountScreenFormController {
     state = const AsyncLoading();
 
     state = await AsyncValue.guard(() => userRepository.updateUser(
+          email: email,
           fullName: fullName,
           id: currentUser.uid,
           major: major,

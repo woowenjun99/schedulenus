@@ -18,6 +18,7 @@ class UserRepository {
   }
 
   Future<void> updateUser({
+    required String email,
     required String fullName,
     required String id,
     required String major,
@@ -25,7 +26,8 @@ class UserRepository {
     required String username,
   }) async {
     final HttpsCallableResult result =
-        await functions.httpsCallable("updateUser").call({
+        await functions.httpsCallable("editUser").call({
+      "email": email,
       "fullName": fullName,
       "id": id,
       "major": major,
