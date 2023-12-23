@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_validator/form_validator.dart';
@@ -10,14 +11,14 @@ import 'package:schedulenus/src/routes/app_route.dart';
 import 'package:schedulenus/src/services/auth/presentation/auth_screen_controller.dart';
 import 'package:schedulenus/src/util/async_value_ui.dart';
 
-class LoginScreen extends ConsumerStatefulWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  ConsumerState<LoginScreen> createState() => _LoginScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -32,98 +33,185 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final double contentWidth = MediaQuery.of(context).size.width * 0.9;
-    ref.listen<AsyncValue>(
-      authScreenControllerProvider,
-      (_, state) => state.showAlertDialogOnError(context),
-    );
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Form(
-        key: _form,
-        child: SizedBox(
-          width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "ScheduleNUS",
-                style: GoogleFonts.inter(
-                  fontSize: 36,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(height: 24),
-              SizedBox(
-                width: contentWidth,
-                child: TextFormField(
-                  controller: _emailController,
-                  decoration: const InputDecoration(label: Text("Email")),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: ValidationBuilder().email().required().build(),
-                ),
-              ),
-              const SizedBox(height: 16),
-              SizedBox(
-                width: contentWidth,
-                child: TextFormField(
-                  controller: _passwordController,
-                  decoration: const InputDecoration(label: Text("Password")),
-                  keyboardType: TextInputType.text,
-                  obscureText: true,
-                  validator: ValidationBuilder().required().build(),
-                ),
-              ),
-              const SizedBox(height: 28),
-              Consumer(builder: (BuildContext context, WidgetRef ref, _) {
-                final AsyncValue<void> state =
-                    ref.watch(authScreenControllerProvider);
-
-                return PrimaryButton(
-                  buttonText: "Sign In",
-                  onTap: () async {
-                    final bool? isValid = _form.currentState?.validate();
-                    if (isValid == null || isValid == false) return;
-                    final bool isSuccess = await ref
-                        .watch(authScreenControllerProvider.notifier)
-                        .submit(
-                          email: _emailController.text,
-                          password: _passwordController.text,
-                          formState: AuthScreenFormState.login,
-                        );
-                    if (mounted && isSuccess) {
-                      context.goNamed(AppRoute.home.name);
-                    }
-                  },
-                  isLoading: state.isLoading,
-                );
-              }),
-              const SizedBox(height: 60),
-              SizedBox(
-                width: contentWidth,
-                child: const Divider(),
-              ),
-              const SizedBox(height: 24),
-              SizedBox(
-                width: contentWidth,
-                child: ElevatedButton.icon(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                      Theme.of(context).colorScheme.background,
-                    ),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+      body: SafeArea(
+        child: Form(
+          key: _form,
+          child: SizedBox(
+            width: double.infinity,
+            child: CustomScrollView(slivers: [
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FadeInUp(
+                      duration: const Duration(milliseconds: 1800),
+                      child: SizedBox(
+                        width: contentWidth,
+                        child: Text(
+                          "ScheduleNUS",
+                          style: GoogleFonts.inter(
+                            fontSize: 36,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.clip,
+                        ),
                       ),
                     ),
-                  ),
-                  onPressed: () =>
-                      context.pushNamed(AppRoute.registration.name),
-                  icon: Icon(MdiIcons.accountPlus),
-                  label: const Text("Create an account"),
+                    // Form
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      child: FadeInUp(
+                        duration: const Duration(milliseconds: 1800),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: const Color.fromRGBO(143, 148, 251, 1),
+                            ),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color.fromRGBO(143, 148, 251, .2),
+                                blurRadius: 20.0,
+                                offset: Offset(0, 10),
+                              )
+                            ],
+                          ),
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                padding: const EdgeInsets.all(5),
+                                width: contentWidth,
+                                child: TextFormField(
+                                  controller: _emailController,
+                                  decoration: InputDecoration(
+                                    prefixIcon: const Icon(Icons.email),
+                                    hintText: "Email",
+                                    hintStyle:
+                                        TextStyle(color: Colors.grey[700]),
+                                  ),
+                                  keyboardType: TextInputType.emailAddress,
+                                  validator: ValidationBuilder()
+                                      .email()
+                                      .required()
+                                      .build(),
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(5),
+                                width: contentWidth,
+                                child: TextFormField(
+                                  controller: _passwordController,
+                                  decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: "Password",
+                                      hintStyle: TextStyle(
+                                        color: Colors.grey[700],
+                                      ),
+                                      prefixIcon: const Icon(Icons.lock)),
+                                  keyboardType: TextInputType.text,
+                                  obscureText: true,
+                                  validator:
+                                      ValidationBuilder().required().build(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    FadeInUp(
+                      duration: const Duration(milliseconds: 1800),
+                      child: SizedBox(
+                        width: contentWidth,
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton(
+                              onPressed: null,
+                              child: Text(
+                                "Forget password?",
+                                textAlign: TextAlign.end,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    // Login Button
+                    Consumer(builder: (BuildContext context, WidgetRef ref, _) {
+                      ref.listen<AsyncValue>(
+                        authScreenControllerProvider,
+                        (_, state) => state.showAlertDialogOnError(context),
+                      );
+
+                      final AsyncValue<void> state =
+                          ref.watch(authScreenControllerProvider);
+
+                      return FadeInUp(
+                        duration: const Duration(milliseconds: 1800),
+                        child: SizedBox(
+                          width: contentWidth,
+                          child: PrimaryButton(
+                            isLoading: state.isLoading,
+                            buttonText: "Sign In",
+                            onPressed: () async {
+                              final bool isValid =
+                                  _form.currentState!.validate();
+                              if (!isValid) return;
+                              _form.currentState!.save();
+                              await ref
+                                  .watch(authScreenControllerProvider.notifier)
+                                  .submit(
+                                    email: _emailController.text,
+                                    password: _passwordController.text,
+                                    formState: AuthScreenFormState.login,
+                                  );
+                            },
+                          ),
+                        ),
+                      );
+                    }),
+
+                    FadeInUp(
+                      duration: const Duration(milliseconds: 1800),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 36),
+                        width: contentWidth,
+                        child: const Divider(),
+                      ),
+                    ),
+
+                    FadeInUp(
+                      duration: const Duration(milliseconds: 1800),
+                      child: SizedBox(
+                        width: contentWidth,
+                        child: OutlinedButton.icon(
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ),
+                          onPressed: () =>
+                              context.pushNamed(AppRoute.registration.name),
+                          icon: Icon(MdiIcons.accountPlus),
+                          label: const Text("Create new account"),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
+            ]),
           ),
         ),
       ),

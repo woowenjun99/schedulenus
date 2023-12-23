@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_validator/form_validator.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:schedulenus/src/common_widgets/button.dart';
-import 'package:schedulenus/src/routes/app_route.dart';
 import 'package:schedulenus/src/services/auth/presentation/auth_screen_controller.dart';
 import 'package:schedulenus/src/util/async_value_ui.dart';
 
@@ -37,68 +35,128 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
     );
 
     return Scaffold(
-      appBar: AppBar(),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Form(
-        key: _form,
-        child: SizedBox(
-          width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "ScheduleNUS",
-                style: GoogleFonts.inter(
-                  fontSize: 36,
-                  fontWeight: FontWeight.w500,
+      body: SafeArea(
+        child: Form(
+          key: _form,
+          child: SizedBox(
+            width: double.infinity,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: contentWidth,
+                  child: Column(
+                    children: [
+                      Text(
+                        "ScheduleNUS",
+                        style: GoogleFonts.inter(
+                          fontSize: 36,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        "Create a new account and start using ScheduleNUS now.",
+                        style: GoogleFonts.inter(),
+                        overflow: TextOverflow.clip,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 24),
-              SizedBox(
-                width: contentWidth,
-                child: TextFormField(
-                  controller: _emailController,
-                  decoration: const InputDecoration(label: Text("Email")),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: ValidationBuilder().email().required().build(),
+                const SizedBox(height: 12),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: const Color.fromRGBO(143, 148, 251, 1),
+                      ),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color.fromRGBO(143, 148, 251, .2),
+                          blurRadius: 20.0,
+                          offset: Offset(0, 10),
+                        )
+                      ],
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          padding: const EdgeInsets.all(5),
+                          width: contentWidth,
+                          child: TextFormField(
+                            controller: _emailController,
+                            decoration: InputDecoration(
+                              prefixIcon: const Icon(Icons.email),
+                              hintText: "Email",
+                              hintStyle: TextStyle(color: Colors.grey[700]),
+                            ),
+                            keyboardType: TextInputType.emailAddress,
+                            validator:
+                                ValidationBuilder().email().required().build(),
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(5),
+                          width: contentWidth,
+                          child: TextFormField(
+                            controller: _passwordController,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Password",
+                                hintStyle: TextStyle(
+                                  color: Colors.grey[700],
+                                ),
+                                prefixIcon: const Icon(Icons.lock)),
+                            keyboardType: TextInputType.text,
+                            obscureText: true,
+                            validator: ValidationBuilder().required().build(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              SizedBox(
-                width: contentWidth,
-                child: TextFormField(
-                  controller: _passwordController,
-                  decoration: const InputDecoration(label: Text("Password")),
-                  keyboardType: TextInputType.text,
-                  obscureText: true,
-                  validator: ValidationBuilder().required().build(),
-                ),
-              ),
-              const SizedBox(height: 28),
-              Consumer(builder: (BuildContext context, WidgetRef ref, _) {
-                final AsyncValue<void> state =
-                    ref.watch(authScreenControllerProvider);
-
-                return PrimaryButton(
-                  buttonText: "Register",
-                  onTap: () async {
-                    final bool? isValid = _form.currentState?.validate();
-                    if (isValid == null || isValid == false) return;
-                    final bool isSuccess = await ref
-                        .watch(authScreenControllerProvider.notifier)
-                        .submit(
-                          email: _emailController.text,
-                          password: _passwordController.text,
-                          formState: AuthScreenFormState.register,
-                        );
-                    if (mounted && isSuccess) {
-                      context.goNamed(AppRoute.home.name);
-                    }
-                  },
-                  isLoading: state.isLoading,
-                );
-              }),
-            ],
+                const SizedBox(height: 28),
+                Consumer(builder: (BuildContext context, WidgetRef ref, _) {
+                  ref.listen<AsyncValue>(
+                    authScreenControllerProvider,
+                    (_, state) => state.showAlertDialogOnError(context),
+                  );
+        
+                  final AsyncValue<void> state =
+                      ref.watch(authScreenControllerProvider);
+        
+                  return SizedBox(
+                    width: contentWidth,
+                    child: PrimaryButton(
+                      isLoading: state.isLoading,
+                      buttonText: "Register new account",
+                      onPressed: () async {
+                        final bool isValid = _form.currentState!.validate();
+                        if (!isValid) return;
+                        _form.currentState!.save();
+                        await ref
+                            .watch(authScreenControllerProvider.notifier)
+                            .submit(
+                              email: _emailController.text,
+                              password: _passwordController.text,
+                              formState: AuthScreenFormState.register,
+                            );
+                      },
+                    ),
+                  );
+                }),
+              ],
+            ),
           ),
         ),
       ),
