@@ -131,10 +131,10 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                     authScreenControllerProvider,
                     (_, state) => state.showAlertDialogOnError(context),
                   );
-        
+
                   final AsyncValue<void> state =
                       ref.watch(authScreenControllerProvider);
-        
+
                   return SizedBox(
                     width: contentWidth,
                     child: PrimaryButton(

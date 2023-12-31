@@ -53,6 +53,7 @@ class AuthScreenController extends _$AuthScreenController {
     );
     return state.hasError == false;
   }
+
   Future<bool> signout() async {
     state = const AsyncLoading();
     final AuthRepository authRepository = ref.watch(authRepositoryProvider);

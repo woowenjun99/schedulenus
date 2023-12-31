@@ -1,0 +1,31 @@
+name: Continuous Integration
+on: [push]
+
+jobs:
+    analysis:
+        name: analysis
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Initialize Flutter
+              uses: ./.github/actions/workflows/initialize-flutter
+
+            - name: Check code format
+              run: dart format . --set-exit-if-changed
+
+            - name: Generate code
+              run: dart run build_runner build -d
+
+    widget-tests:
+        name: widget-tests
+        runs-on: ubuntu-latest
+        needs: analysis
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Initialize Flutter
+              uses: ./.github/actions/workflows/initialize-flutter
+
+            - name: Run tests
+              run: flutter test
