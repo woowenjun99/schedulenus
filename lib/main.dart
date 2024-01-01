@@ -12,6 +12,6 @@ Future<void> main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(DevicePreview(
     builder: (context) => const ProviderScope(child: MyApp()),
-    enabled: !kReleaseMode,
+    enabled: kDebugMode && kIsWeb,
   ));
 }

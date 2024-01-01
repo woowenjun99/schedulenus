@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -22,8 +23,8 @@ class OptionsButton extends StatelessWidget {
     return GestureDetector(
       onTap: () => context.pushNamed(routeName),
       child: Container(
-        width: 160,
         decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
           borderRadius: BorderRadius.circular(8),
           color: color,
         ),
@@ -35,15 +36,12 @@ class OptionsButton extends StatelessWidget {
             children: [
               SvgPicture.asset(
                 svgPath,
-                height: 40,
+                height: 30,
               ),
               const SizedBox(height: 12),
-              Text(
+              AutoSizeText(
                 buttonName,
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
+                style: GoogleFonts.inter(fontWeight: FontWeight.w500),
                 textAlign: TextAlign.center,
               ),
             ],

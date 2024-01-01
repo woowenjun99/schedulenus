@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -16,19 +17,46 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("Welcome Back",
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          // Welcome back text
+          Padding(
+            padding: const EdgeInsets.only(bottom: 24),
+            child: Center(
+              child: AutoSizeText(
+                "Welcome Back",
+                overflow: TextOverflow.clip,
                 style: GoogleFonts.inter(
                   fontWeight: FontWeight.w700,
                   fontSize: 24,
-                )),
-            const SizedBox(height: 24),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <OptionsButton>[
+                ),
+              ),
+            ),
+          ),
+
+          // TODO: Announcement section
+
+          // Explore section
+          TextButton(
+            onPressed: null,
+            child: AutoSizeText(
+              "Explore",
+              style: GoogleFonts.inter(
+                fontWeight: FontWeight.w500,
+              ),
+              textAlign: TextAlign.start,
+            ),
+          ),
+
+          Flexible(
+            child: GridView.count(
+              primary: false,
+              crossAxisCount: 3,
+              padding: const EdgeInsets.all(10),
+              crossAxisSpacing: 10,
+              children: [
                 OptionsButton(
                   buttonName: "Timetable",
                   color: const Color.fromRGBO(255, 197, 197, 0.6),
@@ -43,9 +71,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
