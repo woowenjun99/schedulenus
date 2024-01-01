@@ -52,6 +52,11 @@ GoRouter goRouter(ref) {
         name: AppRoute.login.name,
         builder: (context, state) => const LoginScreen(),
       ),
+      GoRoute(
+        path: "/my_account",
+        name: AppRoute.myAccountScreen.name,
+        builder: (context, state) => const MyAccountScreen(),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
             ScaffoldWithNestedNavigation(navigationShell: navigationShell),
@@ -70,16 +75,10 @@ GoRouter goRouter(ref) {
             navigatorKey: _shellNavigatorBKey,
             routes: [
               GoRoute(
-                  path: "/profile",
-                  name: AppRoute.profile.name,
-                  builder: (context, state) => const ProfileScreen(),
-                  routes: [
-                    GoRoute(
-                      path: "my_account",
-                      name: AppRoute.myAccountScreen.name,
-                      builder: (context, state) => const MyAccountScreen(),
-                    ),
-                  ]),
+                path: "/profile",
+                name: AppRoute.profile.name,
+                builder: (context, state) => const ProfileScreen(),
+              ),
             ],
           ),
         ],
