@@ -23,7 +23,7 @@ final nusmodsRepositoryProvider =
 
 typedef NusmodsRepositoryRef = AutoDisposeProviderRef<NusmodsRepository>;
 String _$getAllModulesSummaryHash() =>
-    r'e988b925d6518cd02a8891bbf1a8c7d1ec6cd6b3';
+    r'96ba264e0177b86767ad5c086268f1ae5e732e5f';
 
 /// See also [getAllModulesSummary].
 @ProviderFor(getAllModulesSummary)

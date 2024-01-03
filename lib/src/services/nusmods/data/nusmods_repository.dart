@@ -37,7 +37,8 @@ NusmodsRepository nusmodsRepository(ref) {
   );
 }
 
-@Riverpod(keepAlive: false)
+// Set keepAlive to be true to cache the data.
+@riverpod
 Future<List<SimplifiedModule>> getAllModulesSummary(ref) {
   final NusmodsRepository repository = ref.watch(nusmodsRepositoryProvider);
   return repository.getAllModulesSummary("2023-2024");
