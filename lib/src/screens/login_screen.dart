@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import 'package:schedulenus/src/common_widgets/button.dart';
 import 'package:schedulenus/src/routes/app_route.dart';
@@ -203,7 +202,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           onPressed: () =>
                               context.pushNamed(AppRoute.registration.name),
-                          icon: Icon(MdiIcons.accountPlus),
+                          icon: const Icon(Icons.person_add),
                           label: const Text("Create new account"),
                         ),
                       ),
