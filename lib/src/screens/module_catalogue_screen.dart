@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:schedulenus/src/common_widgets/skeleton_loader.dart';
 
 import 'package:schedulenus/src/services/nusmods/data/nusmods_repository.dart';
 import 'package:schedulenus/src/services/nusmods/domain/modules.dart';
