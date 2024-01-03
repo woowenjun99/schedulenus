@@ -1,9 +1,11 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:schedulenus/src/common_widgets/skeleton_loader.dart';
 
 import 'package:schedulenus/src/services/nusmods/data/nusmods_repository.dart';
 import 'package:schedulenus/src/services/nusmods/domain/modules.dart';
-import 'package:schedulenus/src/services/nusmods/presentation/modules_search_bar.dart';
+import 'package:schedulenus/src/services/nusmods/presentation/module_list.dart';
 
 class ModuleCatalogueScreen extends ConsumerStatefulWidget {
   const ModuleCatalogueScreen({super.key});
@@ -20,15 +22,18 @@ class _ModuleCatalogueScreenState extends ConsumerState<ModuleCatalogueScreen> {
         ref.watch(getAllModulesSummaryProvider);
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        scrolledUnderElevation: 0,
+        title: const AutoSizeText("Module Catalogue"),
+      ),
       body: SafeArea(
         child: SizedBox(
             width: double.infinity,
             child: modules.when(
-              loading: () => const Center(child: Text("Loading")),
+              loading: () => const CircularProgressIndicator(),
               error: (error, stackTrace) =>
                   Center(child: Text(error.toString())),
-              data: (modules) => ModuleSearchBar(modules: modules),
+              data: (modules) => ModuleList(modules: modules),
             )),
       ),
     );
