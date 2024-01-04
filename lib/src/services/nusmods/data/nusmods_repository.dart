@@ -28,9 +28,11 @@ class NusmodsRepository {
 
   /// Gets the specific information about the module.
   Future<Module> getIndividualModule(
-      String moduleCode, String academicYear) async {
+    String academicYear,
+    String moduleCode,
+  ) async {
     final response = await dio.request(
-      "/$academicYear/modules/$moduleCode",
+      "/$academicYear/modules/$moduleCode.json",
       options: Options(method: "GET"),
     );
 
