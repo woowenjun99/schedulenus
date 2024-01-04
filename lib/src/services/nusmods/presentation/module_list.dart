@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:schedulenus/src/services/nusmods/domain/modules.dart';
 
@@ -83,6 +84,8 @@ class _ModuleListPageState extends State<ModuleList> {
               final Module currentModule = filteredModules[index];
 
               return ListTile(
+                onTap: () =>
+                    context.push("/modules/${currentModule.moduleCode}"),
                 trailing: const Icon(Icons.chevron_right),
                 title: AutoSizeText(
                   "${currentModule.moduleCode} ${currentModule.title}",

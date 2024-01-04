@@ -5,6 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:schedulenus/src/common_widgets/scaffold_with_nested_navigation.dart';
 import 'package:schedulenus/src/routes/app_route.dart';
 import 'package:schedulenus/src/routes/go_router_refresh_stream.dart';
+import 'package:schedulenus/src/services/nusmods/presentation/individual_module_screen.dart';
 import 'package:schedulenus/src/services/nusmods/presentation/module_catalogue_screen.dart';
 import 'package:schedulenus/src/screens/my_account_screen.dart';
 import 'package:schedulenus/src/screens/profile_screen.dart';
@@ -43,6 +44,7 @@ GoRouter goRouter(ref) {
     },
     refreshListenable: GoRouterRefreshStream(authRepository.authStateChange),
     routes: [
+      /// Authentication Service
       GoRoute(
         path: "/registration",
         name: AppRoute.registration.name,
@@ -53,16 +55,27 @@ GoRouter goRouter(ref) {
         name: AppRoute.login.name,
         builder: (context, state) => const LoginScreen(),
       ),
-      GoRoute(
-        path: "/my_account",
-        name: AppRoute.myAccountScreen.name,
-        builder: (context, state) => const MyAccountScreen(),
-      ),
+
+      /// NUSMods Service
       GoRoute(
         path: "/modules",
         name: AppRoute.allModules.name,
         builder: (context, state) => const ModuleCatalogueScreen(),
       ),
+      GoRoute(
+        path: "/modules/:moduleCode",
+        builder: (context, state) {
+          final String moduleCode = state.pathParameters["moduleCode"]!;
+          return IndividualModuleScreen(moduleCode: moduleCode);
+        },
+      ),
+
+      GoRoute(
+        path: "/my_account",
+        name: AppRoute.myAccountScreen.name,
+        builder: (context, state) => const MyAccountScreen(),
+      ),
+
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
             ScaffoldWithNestedNavigation(navigationShell: navigationShell),
