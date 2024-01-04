@@ -22,23 +22,20 @@ final nusmodsRepositoryProvider =
 );
 
 typedef NusmodsRepositoryRef = AutoDisposeProviderRef<NusmodsRepository>;
-String _$getAllModulesSummaryHash() =>
-    r'96ba264e0177b86767ad5c086268f1ae5e732e5f';
+String _$getAllModulesHash() => r'9635490bf0e88aa8720b6c3cc6088d6058ade183';
 
-/// See also [getAllModulesSummary].
-@ProviderFor(getAllModulesSummary)
-final getAllModulesSummaryProvider =
-    AutoDisposeFutureProvider<List<SimplifiedModule>>.internal(
-  getAllModulesSummary,
-  name: r'getAllModulesSummaryProvider',
+/// See also [getAllModules].
+@ProviderFor(getAllModules)
+final getAllModulesProvider = AutoDisposeFutureProvider<List<Module>>.internal(
+  getAllModules,
+  name: r'getAllModulesProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$getAllModulesSummaryHash,
+      : _$getAllModulesHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef GetAllModulesSummaryRef
-    = AutoDisposeFutureProviderRef<List<SimplifiedModule>>;
+typedef GetAllModulesRef = AutoDisposeFutureProviderRef<List<Module>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

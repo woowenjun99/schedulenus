@@ -1,9 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+
 import 'package:schedulenus/src/services/nusmods/domain/modules.dart';
 
 class ModuleList extends StatefulWidget {
-  final List<SimplifiedModule> modules;
+  final List<Module> modules;
 
   const ModuleList({
     super.key,
@@ -16,7 +17,7 @@ class ModuleList extends StatefulWidget {
 
 class _ModuleListPageState extends State<ModuleList> {
   final TextEditingController _searchController = TextEditingController();
-  List<SimplifiedModule> filteredModules = [];
+  List<Module> filteredModules = [];
 
   @override
   void dispose() {
@@ -69,28 +70,26 @@ class _ModuleListPageState extends State<ModuleList> {
           ),
         ),
         Flexible(
-          child: ListView.builder(
+          child: ListView.separated(
             padding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width * 0.05,
+                horizontal: MediaQuery.of(context).size.width * 0.025),
+            separatorBuilder: (context, index) => const Divider(
+              thickness: 0.3,
+              color: Colors.black38,
             ),
             itemCount: filteredModules.length,
             itemBuilder: (context, index) {
-              final SimplifiedModule currentModule = filteredModules[index];
+              final Module currentModule = filteredModules[index];
 
-              return Card(
-                child: ListTile(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  tileColor: Theme.of(context).colorScheme.secondary,
-                  textColor: Colors.white,
-                  title: AutoSizeText(
-                    currentModule.title,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: AutoSizeText(
-                    "Module Code ${currentModule.moduleCode}",
-                  ),
+              return ListTile(
+                trailing: const Icon(Icons.chevron_right),
+                title: AutoSizeText(
+                  "${currentModule.moduleCode} ${currentModule.title}",
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text(
+                  currentModule.description,
+                  overflow: TextOverflow.ellipsis,
                 ),
               );
             },
