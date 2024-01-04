@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -36,7 +37,7 @@ class PrimaryButton extends StatelessWidget {
             )
           : Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
+              child: AutoSizeText(
                 buttonText,
                 style: GoogleFonts.inter(
                   fontSize: 18,

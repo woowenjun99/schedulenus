@@ -12,6 +12,8 @@ class NusmodsRepository {
 
   const NusmodsRepository({required this.dio});
 
+  /// Gets all the information about the modules including the description and
+  /// faculty
   Future<List<Module>> getAllModules(String academicYear) async {
     final response = await dio.request(
       "/$academicYear/moduleInfo.json",
@@ -22,6 +24,21 @@ class NusmodsRepository {
         List<Map<String, dynamic>>.from(response.data);
 
     return data.map((d) => Module.fromJson(d)).toList();
+  }
+
+  /// Gets the specific information about the module.
+  Future<Module> getIndividualModule(
+    String academicYear,
+    String moduleCode,
+  ) async {
+    final response = await dio.request(
+      "/$academicYear/modules/$moduleCode.json",
+      options: Options(method: "GET"),
+    );
+
+    final data = Map<String, dynamic>.from(response.data);
+
+    return Module.fromJson(data);
   }
 }
 
@@ -34,6 +51,15 @@ NusmodsRepository nusmodsRepository(ref) {
       connectTimeout: const Duration(seconds: 5),
     )),
   );
+}
+
+@Riverpod(keepAlive: false)
+Future<Module> getIndividualModule(
+  ref, {
+  required String moduleCode,
+}) {
+  final NusmodsRepository repository = ref.watch(nusmodsRepositoryProvider);
+  return repository.getIndividualModule("2023-2024", moduleCode);
 }
 
 // Set keepAlive to be true to cache the data.
