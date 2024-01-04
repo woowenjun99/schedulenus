@@ -72,7 +72,8 @@ class _ModuleListPageState extends State<ModuleList> {
         Flexible(
           child: ListView.separated(
             padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width * 0.025),
+              horizontal: MediaQuery.of(context).size.width * 0.025,
+            ),
             separatorBuilder: (context, index) => const Divider(
               thickness: 0.3,
               color: Colors.black38,

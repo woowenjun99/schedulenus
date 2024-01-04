@@ -28,13 +28,13 @@ class _ModuleCatalogueScreenState extends ConsumerState<ModuleCatalogueScreen> {
       ),
       body: SafeArea(
         child: SizedBox(
-            width: double.infinity,
-            child: modules.when(
-              loading: () => const SkeletonLoader(),
-              error: (error, stackTrace) =>
-                  Center(child: Text(error.toString())),
-              data: (modules) => ModuleList(modules: modules),
-            )),
+          width: double.infinity,
+          child: modules.when(
+            loading: () => const SkeletonLoader(),
+            error: (error, stackTrace) => Center(child: Text(error.toString())),
+            data: (modules) => ModuleList(modules: modules),
+          ),
+        ),
       ),
     );
   }
