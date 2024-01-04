@@ -7,4 +7,4 @@ format:
 analyze:
 	flutter analyze --no-fatal-infos --no-fatal-warnings
 
-.PHONY: generate format analyze
+.PHONY: generate analyze

@@ -15,12 +15,11 @@ class MyApp extends ConsumerWidget {
       locale: DevicePreview.locale(context),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          primary: const Color.fromRGBO(59, 83, 173, 1),
-          secondary: const Color.fromRGBO(0, 153, 101, 1),
-          onBackground: const Color.fromRGBO(29, 30, 37, 1),
-          background: const Color.fromRGBO(248, 249, 250, 1),
-          seedColor: Colors.purple,
+        colorScheme: const ColorScheme.light(
+          primary: Color.fromRGBO(25, 4, 130, 1),
+          onPrimary: Colors.white,
+          onBackground: Color.fromRGBO(29, 30, 37, 1),
+          background: Color.fromRGBO(248, 249, 250, 1),
         ),
         useMaterial3: true,
       ),

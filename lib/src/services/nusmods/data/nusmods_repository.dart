@@ -12,17 +12,16 @@ class NusmodsRepository {
 
   const NusmodsRepository({required this.dio});
 
-  Future<List<SimplifiedModule>> getAllModulesSummary(
-      String academicYear) async {
+  Future<List<Module>> getAllModules(String academicYear) async {
     final response = await dio.request(
-      "/$academicYear/moduleList.json",
+      "/$academicYear/moduleInfo.json",
       options: Options(method: "GET"),
     );
 
     final List<Map<String, dynamic>> data =
         List<Map<String, dynamic>>.from(response.data);
 
-    return data.map((d) => SimplifiedModule.fromJson(d)).toList();
+    return data.map((d) => Module.fromJson(d)).toList();
   }
 }
 
@@ -39,7 +38,7 @@ NusmodsRepository nusmodsRepository(ref) {
 
 // Set keepAlive to be true to cache the data.
 @riverpod
-Future<List<SimplifiedModule>> getAllModulesSummary(ref) {
+Future<List<Module>> getAllModules(ref) {
   final NusmodsRepository repository = ref.watch(nusmodsRepositoryProvider);
-  return repository.getAllModulesSummary("2023-2024");
+  return repository.getAllModules("2023-2024");
 }

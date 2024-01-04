@@ -1,18 +1,18 @@
-class SimplifiedModule {
+class Module {
+  final String description;
   final String moduleCode;
-  final List<int> semesters;
   final String title;
 
-  const SimplifiedModule({
+  const Module({
+    required this.description,
     required this.moduleCode,
-    required this.semesters,
     required this.title,
   });
 
-  factory SimplifiedModule.fromJson(Map<String, dynamic> json) {
-    return SimplifiedModule(
+  factory Module.fromJson(Map<String, dynamic> json) {
+    return Module(
+      description: json["description"],
       moduleCode: json["moduleCode"],
-      semesters: List<int>.from(json["semesters"]),
       title: json["title"],
     );
   }
