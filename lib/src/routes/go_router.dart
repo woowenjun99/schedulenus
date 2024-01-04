@@ -7,11 +7,11 @@ import 'package:schedulenus/src/routes/app_route.dart';
 import 'package:schedulenus/src/routes/go_router_refresh_stream.dart';
 import 'package:schedulenus/src/services/nusmods/presentation/individual_module_screen.dart';
 import 'package:schedulenus/src/services/nusmods/presentation/module_catalogue_screen.dart';
-import 'package:schedulenus/src/screens/my_account_screen.dart';
-import 'package:schedulenus/src/screens/profile_screen.dart';
-import 'package:schedulenus/src/screens/home_screen.dart';
-import 'package:schedulenus/src/screens/login_screen.dart';
-import 'package:schedulenus/src/screens/registration_screen.dart';
+import 'package:schedulenus/src/services/user/presentation/my_account_screen.dart';
+import 'package:schedulenus/src/common_screens/profile_screen.dart';
+import 'package:schedulenus/src/common_screens/home_screen.dart';
+import 'package:schedulenus/src/services/auth/presentation/login_screen.dart';
+import 'package:schedulenus/src/services/auth/presentation/registration_screen.dart';
 import 'package:schedulenus/src/services/auth/data/auth_repository.dart';
 
 part 'go_router.g.dart';
