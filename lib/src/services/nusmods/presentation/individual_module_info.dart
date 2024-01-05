@@ -10,6 +10,7 @@ class IndividualModuleInfo extends StatelessWidget {
   final List<Widget> tabs = const [
     Tab(text: "About"),
     Tab(text: "Teaching Team"),
+    Tab(text: "Prerequisites"),
     Tab(text: "Reviews"),
   ];
 
@@ -47,7 +48,10 @@ class IndividualModuleInfo extends StatelessWidget {
             ),
             AutoSizeText("${module.moduleCredit} MCs"),
 
-            TabBar(tabs: tabs),
+            TabBar(
+              tabs: tabs,
+              isScrollable: true,
+            ),
             Flexible(
               child: TabBarView(
                 children: [
@@ -77,6 +81,7 @@ class IndividualModuleInfo extends StatelessWidget {
                       ),
                     ],
                   ),
+                  const Column(children: []),
                   const Column(children: []),
                   const Column(children: []),
                 ],

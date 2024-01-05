@@ -6,7 +6,7 @@ import "package:schedulenus/src/services/nusmods/data/nusmods_repository.dart";
 import "package:schedulenus/src/services/nusmods/domain/modules.dart";
 import "package:schedulenus/src/services/nusmods/presentation/individual_module_info.dart";
 
-class IndividualModuleScreen extends ConsumerStatefulWidget {
+class IndividualModuleScreen extends ConsumerWidget {
   final String moduleCode;
 
   const IndividualModuleScreen({
@@ -15,34 +15,23 @@ class IndividualModuleScreen extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _IndividualModuleScreenState();
-}
-
-class _IndividualModuleScreenState
-    extends ConsumerState<IndividualModuleScreen> {
-  bool hasLoaded = false;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<Module> module =
-        ref.watch(getIndividualModuleProvider(moduleCode: widget.moduleCode));
+        ref.watch(getIndividualModuleProvider(moduleCode: moduleCode));
 
     return Scaffold(
       appBar: AppBar(
-        title: AutoSizeText(widget.moduleCode),
+        title: AutoSizeText(moduleCode),
         scrolledUnderElevation: 0,
         backgroundColor: Colors.transparent,
       ),
       extendBodyBehindAppBar: true,
       body: SafeArea(
         child: module.when(
-            error: (error, stackTrace) => Center(child: Text(error.toString())),
-            loading: () => const Center(child: CircularProgressIndicator()),
-            data: (data) {
-              setState(() => hasLoaded = true);
-              return IndividualModuleInfo(module: data);
-            }),
+          error: (error, stackTrace) => Center(child: Text(error.toString())),
+          loading: () => const Center(child: CircularProgressIndicator()),
+          data: (data) => IndividualModuleInfo(module: data),
+        ),
       ),
     );
   }
