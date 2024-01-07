@@ -6,7 +6,7 @@ part of 'nusmods_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$nusmodsRepositoryHash() => r'0784f9e03fcbbdc0e0e72f07e48106ee0ff11a5a';
+String _$nusmodsRepositoryHash() => r'25ce7eefb68b14a34839538fe360abb383845321';
 
 /// See also [nusmodsRepository].
 @ProviderFor(nusmodsRepository)

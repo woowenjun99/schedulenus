@@ -1,3 +1,4 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:schedulenus/src/services/nusmods/domain/modules.dart';
@@ -9,8 +10,12 @@ part 'nusmods_repository.g.dart';
 /// https://api.nusmods.com/v2/#/ for more infomration about the api
 class NusmodsRepository {
   final Dio dio;
+  final FirebaseFunctions functions;
 
-  const NusmodsRepository({required this.dio});
+  const NusmodsRepository({
+    required this.dio,
+    required this.functions,
+  });
 
   /// Gets all the information about the modules including the description and
   /// faculty
@@ -40,6 +45,21 @@ class NusmodsRepository {
 
     return Module.fromJson(data);
   }
+
+  Future<void> saveModule({
+    required String moduleCode,
+    required int semesterTaken,
+  }) async {
+    final HttpsCallableResult result =
+        await functions.httpsCallable("saveModule").call({
+      "moduleCode": moduleCode,
+      "semesterTaken": semesterTaken,
+    });
+
+    final data = Map<String, dynamic>.from(result.data);
+
+    if (!data["success"]) throw Exception(data["error"] as String);
+  }
 }
 
 @riverpod
@@ -50,6 +70,7 @@ NusmodsRepository nusmodsRepository(ref) {
       sendTimeout: const Duration(seconds: 5),
       connectTimeout: const Duration(seconds: 5),
     )),
+    functions: FirebaseFunctions.instanceFor(region: "asia-southeast1"),
   );
 }
 
